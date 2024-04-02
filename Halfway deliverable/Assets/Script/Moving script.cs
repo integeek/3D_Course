@@ -1,20 +1,30 @@
 using UnityEngine;
 
-public class MovingScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5.0f;
-    public float horizontalInput;
-    public float forwardInput;
+    public float speed = 5f; // Vitesse de déplacement
 
+    private Rigidbody rb; // Référence au Rigidbody
 
-    void Update()
+    void Start()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
+        // Récupérer la référence au Rigidbody attaché à l'objet
+        rb = GetComponent<Rigidbody>();
 
+        // Geler les rotations sur le Rigidbody
+        rb.freezeRotation = true;
+    }
 
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * horizontalInput);
-        transform.Translate(Vector3.left * Time.deltaTime * speed * forwardInput);
+    void FixedUpdate()
+    {
+        // Récupérer les entrées horizontales et verticales
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        // Créer un vecteur de mouvement basé sur les entrées
+        Vector3 movement = new Vector3(-moveVertical, 0.0f, moveHorizontal);
+
+        // Appliquer le mouvement au Rigidbody
+        rb.velocity = movement * speed;
     }
 }
-
