@@ -1,26 +1,20 @@
 using UnityEngine;
 
-public class DeplacementPersonnage : MonoBehaviour
+public class MovingScript : MonoBehaviour
 {
-    public float vitesseDeplacement = 5f; // Vitesse de déplacement du personnage
+    public float speed = 5.0f;
+    public float horizontalInput;
+    public float forwardInput;
+
 
     void Update()
     {
-        // Déplacement horizontal
-        float deplacementHorizontal = Input.GetAxis("Horizontal");
-        float deplacementVertical = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis("Vertical");
 
-        // Déplacement vers la droite
-        if (deplacementHorizontal != 0f)
-        {
-            transform.Translate(Vector3.right * deplacementHorizontal * vitesseDeplacement * Time.deltaTime);
-        }
 
-        // Déplacement vers le haut
-        if (deplacementVertical != 0f)
-        {
-            transform.Translate(Vector3.forward * deplacementVertical * vitesseDeplacement * Time.deltaTime);
-        }
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * horizontalInput);
+        transform.Translate(Vector3.left * Time.deltaTime * speed * forwardInput);
     }
 }
 
